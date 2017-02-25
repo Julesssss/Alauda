@@ -3,10 +3,12 @@ package com.gmail.julianrosser91.alauda;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.gmail.julianrosser91.alauda.api.ApiRequests;
 import com.gmail.julianrosser91.alauda.objects.Set;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 public class SetListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private SetAdapter setAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,17 @@ public class SetListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        setAdapter = new SetAdapter(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Set set = (Set) view.getTag();
+                Snackbar.make(view, set.getTitle(), Snackbar.LENGTH_SHORT).show();
+            }
+        });
+        recyclerView.setAdapter(setAdapter);
 
         loadData();
     }
@@ -56,6 +70,7 @@ public class SetListActivity extends AppCompatActivity {
         ApiRequests.getAllSets(new ApiRequests.APIResponseListener() {
             @Override
             public void onDataLoaded(ArrayList<Set> data) {
+                setAdapter.setData(data);
                 // use data
                 Snackbar.make(recyclerView, "Data Loaded", Snackbar.LENGTH_SHORT).show();
                 for (Set s : data) {
