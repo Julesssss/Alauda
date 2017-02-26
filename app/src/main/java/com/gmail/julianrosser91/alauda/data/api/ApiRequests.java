@@ -1,8 +1,8 @@
-package com.gmail.julianrosser91.alauda.api;
+package com.gmail.julianrosser91.alauda.data.api;
 
 import com.gmail.julianrosser91.alauda.Alauda;
-import com.gmail.julianrosser91.alauda.objects.Set;
-import com.gmail.julianrosser91.alauda.objects.SetArray;
+import com.gmail.julianrosser91.alauda.data.model.Set;
+import com.gmail.julianrosser91.alauda.data.model.SetArray;
 
 import java.util.ArrayList;
 

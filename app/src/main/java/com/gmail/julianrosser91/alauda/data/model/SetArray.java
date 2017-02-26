@@ -1,4 +1,4 @@
-package com.gmail.julianrosser91.alauda.objects;
+package com.gmail.julianrosser91.alauda.data.model;
 
 import com.google.gson.annotations.SerializedName;
 

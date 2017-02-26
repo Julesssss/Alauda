@@ -2,7 +2,7 @@ package com.gmail.julianrosser91.alauda;
 
 import android.app.Application;
 
-import com.gmail.julianrosser91.alauda.api.RetrofitInterfaceApi;
+import com.gmail.julianrosser91.alauda.data.api.ApiInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Alauda extends Application {
 
     private static Alauda sInstance;
-    private static RetrofitInterfaceApi sRetrofitInterfaceApi;
+    private static ApiInterface sApiInterface;
 
     public static Alauda getInstance() {
         return sInstance;
@@ -25,8 +25,8 @@ public class Alauda extends Application {
         sInstance = this;
     }
 
-    public synchronized RetrofitInterfaceApi getVodInterfaceAPI() {
-        if (sRetrofitInterfaceApi == null) {
+    public synchronized ApiInterface getVodInterfaceAPI() {
+        if (sApiInterface == null) {
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .serializeNulls()
@@ -39,9 +39,9 @@ public class Alauda extends Application {
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 
-            sRetrofitInterfaceApi = retrofit.create(RetrofitInterfaceApi.class);
+            sApiInterface = retrofit.create(ApiInterface.class);
         }
-        return sRetrofitInterfaceApi;
+        return sApiInterface;
     }
 
 }

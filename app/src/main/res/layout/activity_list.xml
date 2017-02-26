@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gmail.julianrosser91.alauda.SetListActivity">
+    tools:context="com.gmail.julianrosser91.alauda.view.SetListActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"

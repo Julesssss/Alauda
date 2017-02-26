@@ -1,12 +1,12 @@
-package com.gmail.julianrosser91.alauda.api;
+package com.gmail.julianrosser91.alauda.data.api;
 
 
-import com.gmail.julianrosser91.alauda.objects.SetArray;
+import com.gmail.julianrosser91.alauda.data.model.SetArray;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 
-public interface RetrofitInterfaceApi {
+public interface ApiInterface {
 
     // Get all sets
     @GET("/api/sets/")
