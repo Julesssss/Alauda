@@ -1,5 +1,6 @@
 package com.gmail.julianrosser91.alauda.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -102,6 +103,11 @@ public class SetListActivity extends AppCompatActivity implements SetListInterfa
                 }
             }
         });
+    }
+
+    @Override
+    public void startChooserActivity(Intent intent) {
+        startActivity(Intent.createChooser(intent, "Export Realm Database"));
     }
 
     /*

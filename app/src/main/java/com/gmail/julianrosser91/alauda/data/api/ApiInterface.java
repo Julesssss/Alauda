@@ -1,10 +1,12 @@
 package com.gmail.julianrosser91.alauda.data.api;
 
 
+import com.gmail.julianrosser91.alauda.data.model.ImageObject;
 import com.gmail.julianrosser91.alauda.data.model.SetArray;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Url;
 
 public interface ApiInterface {
 
@@ -12,9 +14,7 @@ public interface ApiInterface {
     @GET("/api/sets/")
     Call<SetArray> getAllSets();
 
-    // Get specific set by slug
-//    @GET("api/sets/?")
-//    Call<SetArray> getSetFromSlug(@Query("slug") String slug);
-
+    @GET
+    Call<ImageObject> getImage(@Url String url);
 
 }

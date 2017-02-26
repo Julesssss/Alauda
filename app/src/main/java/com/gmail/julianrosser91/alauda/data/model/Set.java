@@ -1,6 +1,9 @@
 package com.gmail.julianrosser91.alauda.data.model;
 
 
+import com.google.gson.annotations.SerializedName;
+
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -15,6 +18,10 @@ public class Set extends RealmObject {
     private String body;
     private String quoter;
     private String summary;
+    private String url;
+
+    @SerializedName("image_urls")
+    private RealmList<RealmString> imageUrls;
 
     public String getUid() {
         return uid;
@@ -35,4 +42,22 @@ public class Set extends RealmObject {
     public String getSummary() {
         return summary;
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getImageObjectEndpoint() {
+        if (imageUrls != null && imageUrls.size() > 1) {
+            return imageUrls.get(0).getValue();
+        } else {
+            return null;
+        }
+    }
+
+
 }

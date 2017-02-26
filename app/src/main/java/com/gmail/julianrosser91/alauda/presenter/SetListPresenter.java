@@ -2,8 +2,8 @@ package com.gmail.julianrosser91.alauda.presenter;
 
 import android.view.View;
 
-import com.gmail.julianrosser91.alauda.data.SetListModel;
 import com.gmail.julianrosser91.alauda.data.DatabaseHelper;
+import com.gmail.julianrosser91.alauda.data.SetListModel;
 import com.gmail.julianrosser91.alauda.data.model.Set;
 import com.gmail.julianrosser91.alauda.mvp.SetListInterface;
 
@@ -23,7 +23,7 @@ public class SetListPresenter implements SetListInterface.Presenter {
     }
 
     /*
-        View interface methods
+     *   View interface methods
      */
 
     @Override
@@ -50,12 +50,12 @@ public class SetListPresenter implements SetListInterface.Presenter {
 
     @Override
     public void exportDbPressed() {
-        DatabaseHelper.exportDatabase();
+        view.startChooserActivity(DatabaseHelper.getExportDatabaseIntent());
     }
 
      /*
-        Model interface methods
-     */
+      *   Model interface methods
+      */
 
     @Override
     public void onDataRetrieved(ArrayList<Set> data) {

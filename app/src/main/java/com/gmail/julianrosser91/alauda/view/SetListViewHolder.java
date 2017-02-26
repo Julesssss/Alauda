@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.gmail.julianrosser91.alauda.R;
 import com.gmail.julianrosser91.alauda.data.model.Set;
+import com.squareup.picasso.Picasso;
 
 public class SetListViewHolder extends RecyclerView.ViewHolder {
 
@@ -31,7 +32,10 @@ public class SetListViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setImage(String imageUrl) {
-//        Picasso.with()
-        // set image mImageView
+        if (imageUrl == null) {
+            Picasso.with(mImageView.getContext()).load(R.drawable.placeholder).into(mImageView);
+        } else {
+            Picasso.with(mImageView.getContext()).load(imageUrl).placeholder(R.drawable.placeholder).into(mImageView);
+        }
     }
 }

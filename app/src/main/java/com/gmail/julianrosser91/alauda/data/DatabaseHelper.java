@@ -15,7 +15,7 @@ public class DatabaseHelper {
      *  Use this to export Realm DB so we can view it with Realm Browser. Copied from here -
      *  http://stackoverflow.com/questions/28478987/how-to-view-my-realm-file-in-the-realm-browser
      */
-    public static void exportDatabase() {
+    public static Intent getExportDatabaseIntent() {
 
         // init realm
         Realm realm = Realm.getDefaultInstance();
@@ -41,7 +41,6 @@ public class DatabaseHelper {
         Uri u = Uri.fromFile(exportRealmFile);
         intent.putExtra(Intent.EXTRA_STREAM, u);
 
-        // start email intent
-        Alauda.getInstance().startActivity(Intent.createChooser(intent, "Export Realm Database"));
+        return intent;
     }
 }

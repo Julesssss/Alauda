@@ -1,5 +1,7 @@
 package com.gmail.julianrosser91.alauda.mvp;
 
+import android.content.Intent;
+
 import com.gmail.julianrosser91.alauda.data.model.Set;
 
 import java.util.ArrayList;
@@ -13,6 +15,10 @@ public interface SetListInterface {
         void setMessage(String message);
 
         void showProgressBar(Boolean visible);
+
+        void startActivity(Intent i);
+
+        void startChooserActivity(Intent i);
     }
 
     /**
