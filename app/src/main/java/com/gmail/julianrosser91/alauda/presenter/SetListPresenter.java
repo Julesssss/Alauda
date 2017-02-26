@@ -2,23 +2,29 @@ package com.gmail.julianrosser91.alauda.presenter;
 
 import android.view.View;
 
-import com.gmail.julianrosser91.alauda.mvp.SetListInterface;
-import com.gmail.julianrosser91.alauda.data.api.ApiRequests;
-import com.gmail.julianrosser91.alauda.data.DataHelper;
+import com.gmail.julianrosser91.alauda.data.SetListModel;
+import com.gmail.julianrosser91.alauda.data.DatabaseHelper;
 import com.gmail.julianrosser91.alauda.data.model.Set;
+import com.gmail.julianrosser91.alauda.mvp.SetListInterface;
 
 import java.util.ArrayList;
 
 public class SetListPresenter implements SetListInterface.Presenter {
 
     private SetListInterface.View view;
+    private SetListInterface.Model model;
     private ArrayList<Set> sets;
 
     public SetListPresenter(SetListInterface.View view) {
         this.sets = new ArrayList<>();
         this.view = view;
+        this.model = new SetListModel(this);
         loadSetData();
     }
+
+    /*
+        View interface methods
+     */
 
     @Override
     public void reattachView(SetListInterface.View view) {
@@ -43,27 +49,31 @@ public class SetListPresenter implements SetListInterface.Presenter {
     }
 
     @Override
-    public void onDataRetrieved() {
+    public void exportDbPressed() {
+        DatabaseHelper.exportDatabase();
+    }
 
+     /*
+        Model interface methods
+     */
+
+    @Override
+    public void onDataRetrieved(ArrayList<Set> data) {
+        sets = data;
+        view.showProgressBar(false);
+        if (view != null) {
+            view.setData(data);
+        }
+    }
+
+    @Override
+    public void onDataFailure(String message) {
+        view.showProgressBar(false);
+        view.setMessage(message);
     }
 
     private void loadSetData() {
         view.showProgressBar(true);
-        DataHelper.getSetsData(new ApiRequests.APIResponseListener() {
-            @Override
-            public void onDataLoaded(ArrayList<Set> data) {
-                sets = data;
-                view.showProgressBar(false);
-                if (view != null) {
-                    view.setData(data);
-                }
-            }
-
-            @Override
-            public void onFailure(String message) {
-                view.showProgressBar(false);
-                view.setMessage(message);
-            }
-        });
+        model.getSetListData();
     }
 }

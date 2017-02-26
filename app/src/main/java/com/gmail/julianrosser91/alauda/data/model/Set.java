@@ -1,11 +1,15 @@
 package com.gmail.julianrosser91.alauda.data.model;
 
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * A set is a collection of video content.
  */
-public class Set {
+public class Set extends RealmObject {
 
+    @PrimaryKey
     private String uid;
     private String title;
     private String body;

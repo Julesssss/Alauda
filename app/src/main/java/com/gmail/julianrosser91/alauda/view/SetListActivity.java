@@ -124,6 +124,9 @@ public class SetListActivity extends AppCompatActivity implements SetListInterfa
         if (id == R.id.action_test) {
             presenter.testPressed();
             return true;
+        } else if (id == R.id.action_export_db) {
+            presenter.exportDbPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

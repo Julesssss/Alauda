@@ -6,6 +6,7 @@ import com.gmail.julianrosser91.alauda.data.api.ApiInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import io.realm.Realm;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -23,6 +24,7 @@ public class Alauda extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        Realm.init(this);
     }
 
     public synchronized ApiInterface getVodInterfaceAPI() {
