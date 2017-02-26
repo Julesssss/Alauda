@@ -8,19 +8,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.gmail.julianrosser91.alauda.R;
 import com.gmail.julianrosser91.alauda.data.model.Set;
-import com.gmail.julianrosser91.alauda.mvp.SetListMVPInterface;
+import com.gmail.julianrosser91.alauda.mvp.SetListInterface;
 import com.gmail.julianrosser91.alauda.presenter.SetListPresenter;
 
 import java.util.ArrayList;
 
-public class SetListActivity extends AppCompatActivity implements SetListMVPInterface.View {
+public class SetListActivity extends AppCompatActivity implements SetListInterface.View {
 
+    private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private SetListAdapter setListAdapter;
-    private SetListMVPInterface.Presenter presenter;
+    private SetListInterface.Presenter presenter;
+
+    /*
+     * Lifecycle methods
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,7 @@ public class SetListActivity extends AppCompatActivity implements SetListMVPInte
     }
 
     private void initialiseViews() {
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -44,6 +51,18 @@ public class SetListActivity extends AppCompatActivity implements SetListMVPInte
         recyclerView.setAdapter(setListAdapter);
     }
 
+    private void attachPresenter() {
+        presenter = (SetListInterface.Presenter) getLastCustomNonConfigurationInstance();
+        if (presenter == null) {
+            presenter = new SetListPresenter(this);
+        } else {
+            presenter.reattachView(this);
+        }
+    }
+
+    /*
+        This is how we maintain the Presenter state through rotation
+     */
     @Override
     public Object onRetainCustomNonConfigurationInstance() {
         return presenter;
@@ -55,13 +74,9 @@ public class SetListActivity extends AppCompatActivity implements SetListMVPInte
         super.onDestroy();
     }
 
-    private void attachPresenter() {
-        presenter = (SetListMVPInterface.Presenter) getLastCustomNonConfigurationInstance();
-        if (presenter == null) {
-            presenter = new SetListPresenter();
-        }
-        presenter.attachView(this);
-    }
+    /*
+     * Interface methods called from SetListPresenter
+     */
 
     @Override
     public void setData(ArrayList<Set> sets) {
@@ -72,6 +87,26 @@ public class SetListActivity extends AppCompatActivity implements SetListMVPInte
     public void setMessage(String message) {
         Snackbar.make(recyclerView, message, Snackbar.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void showProgressBar(final Boolean visible) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressBar != null) {
+                    if (visible) {
+                        progressBar.setVisibility(View.VISIBLE);
+                    } else {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+    }
+
+    /*
+     * Options menu methods
+     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

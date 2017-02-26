@@ -4,18 +4,20 @@ import com.gmail.julianrosser91.alauda.data.model.Set;
 
 import java.util.ArrayList;
 
-public interface SetListMVPInterface {
+public interface SetListInterface {
 
     interface View {
 
         void setData(ArrayList<Set> sets);
 
         void setMessage(String message);
+
+        void showProgressBar(Boolean visible);
     }
 
     interface Presenter {
 
-        void attachView(View view);
+        void reattachView(View view);
 
         void detachView();
 
