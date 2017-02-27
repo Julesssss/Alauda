@@ -1,25 +1,15 @@
 package com.gmail.julianrosser91.alauda.mvp;
 
-import android.app.Activity;
-import android.content.Intent;
-
 import com.gmail.julianrosser91.alauda.data.model.Set;
 
-import java.util.ArrayList;
-
-public interface SetListInterface {
+public interface SetDetailInterface {
 
     interface View {
 
-        void setData(ArrayList<Set> sets);
+        void setData(Set set);
 
         void setMessage(String message);
 
-        void showProgressBar(Boolean visible);
-
-        void startActivity(Intent i);
-
-        void startChooserActivity(Intent i);
     }
 
     /**
@@ -33,21 +23,15 @@ public interface SetListInterface {
 
         void detachView();
 
-        void onSetClicked(Activity activity, android.view.View setListItemView);
-
-        void testPressed();
-
-        void exportDbPressed();
-
         // Model --> Presenter
 
-        void onDataRetrieved(ArrayList<Set> sets);
+        void onDataRetrieved(Set set);
 
         void onDataFailure(String message);
     }
 
     interface Model {
 
-        void getSetListData();
+        void getSetFromUid(String uid);
     }
 }

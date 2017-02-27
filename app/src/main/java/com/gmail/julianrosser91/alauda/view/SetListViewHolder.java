@@ -9,18 +9,21 @@ import com.gmail.julianrosser91.alauda.R;
 import com.gmail.julianrosser91.alauda.data.model.Set;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SetListViewHolder extends RecyclerView.ViewHolder {
 
-    private View view;
-    private TextView mTextViewTitle;
-    private ImageView mImageView;
+    @BindView(R.id.textview_title) TextView mTextViewTitle;
+    @BindView(R.id.imageview) ImageView mImageView;
 
-    public SetListViewHolder(View v, View.OnClickListener clickListener) {
-        super(v);
-        v.setOnClickListener(clickListener);
-        this.view = v;
-        mImageView = (ImageView) itemView.findViewById(R.id.imageview);
-        mTextViewTitle = (TextView) itemView.findViewById(R.id.textview_title);
+    private View view;
+
+    public SetListViewHolder(View view, View.OnClickListener clickListener) {
+        super(view);
+        this.view = view;
+        view.setOnClickListener(clickListener);
+        ButterKnife.bind(this, this.view);
     }
 
     public void setTag(Set set) {

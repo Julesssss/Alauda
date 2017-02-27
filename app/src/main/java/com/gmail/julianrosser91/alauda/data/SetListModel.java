@@ -8,8 +8,6 @@ import com.gmail.julianrosser91.alauda.mvp.SetListInterface;
 
 import java.util.ArrayList;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 public class SetListModel implements SetListInterface.Model, ApiRequests.AllSetsResponseListener, ApiRequests.ImageResponseListener {
@@ -25,26 +23,22 @@ public class SetListModel implements SetListInterface.Model, ApiRequests.AllSets
         if (DeviceUtils.isConnectedOrConnecting(Alauda.getInstance())) {
             ApiRequests.getAllSets(this);
         } else {
-            getLocalData();
+            getLocalSetsData();
         }
     }
 
     @Override
     public void onDataLoaded(ArrayList<Set> data) {
         // Save data to local database
-        Realm realmDatabase = getRealmDatabase();
-        realmDatabase.beginTransaction();
-        realmDatabase.copyToRealmOrUpdate(data);
-        realmDatabase.commitTransaction();
+        DatabaseHelper.saveAllSets(data);
         presenter.onDataRetrieved(data);
-
         loadImages(data);
     }
 
     private void loadImages(ArrayList<Set> sets) {
         for (Set set : sets) {
-            if (set.getImageObjectEndpoint() != null) {
-                ApiRequests.getImage(this, set);
+            if (set.getImageObjectEndpoint() != null && set.getImageUrl() == null) {
+                ApiRequests.getImage(this, set); // todo - check this!
             }
         }
     }
@@ -54,34 +48,23 @@ public class SetListModel implements SetListInterface.Model, ApiRequests.AllSets
      */
     @Override
     public void onImageLoaded(Set set) {
-        Realm realmDatabase = getRealmDatabase();
-        realmDatabase.beginTransaction();
-        realmDatabase.insertOrUpdate(set);
-        realmDatabase.commitTransaction();
-        getLocalData();
+        DatabaseHelper.updateSetObject(set);
+        getLocalSetsData();
     }
 
     @Override
     public void onFailure(String message) {
         presenter.onDataFailure(message);
-        getLocalData();
+        getLocalSetsData();
     }
 
-    private void getLocalData() {
-        ArrayList<Set> sets = new ArrayList();
-        Realm realmDatabase = getRealmDatabase();
-        RealmResults<Set> realmResults = realmDatabase.where(Set.class).findAll();
+    private void getLocalSetsData() {
+        ArrayList<Set> sets = new ArrayList<>();
+        RealmResults<Set> realmResults = DatabaseHelper.getAllSets();
         for (Set set : realmResults) {
             sets.add(set);
         }
         presenter.onDataRetrieved(sets);
     }
 
-    private Realm getRealmDatabase() {
-        RealmConfiguration config = new RealmConfiguration
-                .Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        return Realm.getInstance(config);
-    }
 }

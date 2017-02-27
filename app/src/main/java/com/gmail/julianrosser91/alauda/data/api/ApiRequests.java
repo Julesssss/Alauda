@@ -42,7 +42,7 @@ public class ApiRequests {
                 if (response.isSuccessful()) {
                     // Update set object with imageUrl
                     ImageObject imageObject = response.body();
-                    set.setUrl(imageObject.getUrl());
+                    set.setImageUrl(imageObject.getUrl());
                     responseListener.onImageLoaded(set);
                 } else {
                     responseListener.onFailure(response.message());

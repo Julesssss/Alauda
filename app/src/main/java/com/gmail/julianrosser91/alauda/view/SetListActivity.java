@@ -18,10 +18,17 @@ import com.gmail.julianrosser91.alauda.presenter.SetListPresenter;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SetListActivity extends AppCompatActivity implements SetListInterface.View {
 
-    private ProgressBar progressBar;
-    private RecyclerView recyclerView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+
+    @BindView(R.id.recyclerview)
+    RecyclerView recyclerView;
+
     private SetListAdapter setListAdapter;
     private SetListInterface.Presenter presenter;
 
@@ -39,14 +46,13 @@ public class SetListActivity extends AppCompatActivity implements SetListInterfa
     }
 
     private void initialiseViews() {
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        ButterKnife.bind(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         setListAdapter = new SetListAdapter(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.onSetClicked(view);
+                presenter.onSetClicked(SetListActivity.this, view);
             }
         });
         recyclerView.setAdapter(setListAdapter);
@@ -61,18 +67,18 @@ public class SetListActivity extends AppCompatActivity implements SetListInterfa
         }
     }
 
-    /*
-        This is how we maintain the Presenter state through rotation
-     */
-    @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        return presenter;
-    }
-
     @Override
     protected void onDestroy() {
         presenter.detachView();
         super.onDestroy();
+    }
+
+    /*
+       This is how we maintain the Presenter state through rotation. Simple but fine for our usage
+     */
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return presenter;
     }
 
     /*
@@ -107,7 +113,7 @@ public class SetListActivity extends AppCompatActivity implements SetListInterfa
 
     @Override
     public void startChooserActivity(Intent intent) {
-        startActivity(Intent.createChooser(intent, "Export Realm Database"));
+        startActivity(Intent.createChooser(intent, getString(R.string.message_intent_chooser_export_database)));
     }
 
     /*

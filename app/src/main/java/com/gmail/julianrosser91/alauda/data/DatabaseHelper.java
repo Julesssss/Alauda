@@ -4,12 +4,43 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.gmail.julianrosser91.alauda.Alauda;
+import com.gmail.julianrosser91.alauda.Constants;
+import com.gmail.julianrosser91.alauda.data.model.Set;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 public class DatabaseHelper {
+
+    public static Set getSetFromUid(String uid) {
+        Realm realm = getRealmDatabase();
+        return realm.where(Set.class)
+                .equalTo(Constants.SET_UID_KEY, uid)
+                .findFirst();
+    }
+
+    public static RealmResults<Set> getAllSets() {
+        Realm realmDatabase = getRealmDatabase();
+        return realmDatabase.where(Set.class).findAll();
+    }
+
+    public static void saveAllSets(ArrayList<Set> data) {
+        Realm realmDatabase = getRealmDatabase();
+        realmDatabase.beginTransaction();
+        realmDatabase.copyToRealmOrUpdate(data);
+        realmDatabase.commitTransaction();
+    }
+
+    public static void updateSetObject(Set set) {
+        Realm realmDatabase = getRealmDatabase();
+        realmDatabase.beginTransaction();
+        realmDatabase.insertOrUpdate(set);
+        realmDatabase.commitTransaction();
+    }
 
     /*
      *  Use this to export Realm DB so we can view it with Realm Browser. Copied from here -
@@ -42,5 +73,13 @@ public class DatabaseHelper {
         intent.putExtra(Intent.EXTRA_STREAM, u);
 
         return intent;
+    }
+
+    private static Realm getRealmDatabase() {
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        return Realm.getInstance(config);
     }
 }

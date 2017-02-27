@@ -38,7 +38,7 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListViewHolder> {
         Set set = mSets.get(position);
         holder.setTag(set);
         holder.setTitle(set.getTitle());
-        holder.setImage(set.getUrl());
+        holder.setImage(set.getImageUrl());
     }
 
     @Override

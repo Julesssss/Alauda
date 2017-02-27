@@ -43,11 +43,11 @@ public class Set extends RealmObject {
         return summary;
     }
 
-    public String getUrl() {
+    public String getImageUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setImageUrl(String url) {
         this.url = url;
     }
 
