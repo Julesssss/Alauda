@@ -77,20 +77,24 @@ public class SetListPresenter implements SetListInterface.Presenter {
     @Override
     public void onDataRetrieved(ArrayList<Set> data) {
         sets = data;
-        view.showProgressBar(false);
         if (view != null) {
+            view.showProgressBar(false);
             view.setData(data);
         }
     }
 
     @Override
     public void onDataFailure(String message) {
-        view.showProgressBar(false);
-        view.setMessage(message);
+        if (view != null) {
+            view.showProgressBar(false);
+            view.setMessage(message);
+        }
     }
 
     private void loadSetData() {
-        view.showProgressBar(true);
-        model.getSetListData();
+        if (view != null) {
+            view.showProgressBar(true);
+            model.getSetListData();
+        }
     }
 }

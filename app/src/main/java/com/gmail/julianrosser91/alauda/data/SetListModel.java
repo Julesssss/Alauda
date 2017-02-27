@@ -35,10 +35,15 @@ public class SetListModel implements SetListInterface.Model, ApiRequests.AllSets
         loadImages(data);
     }
 
+    /*
+     * We need to minimise the amount of API calls. Here we ensure that we only retrieve an image object
+     * once, as when it is returned we save the url to the Set object. To prevent out of dat images being
+     * used, we could reload images after a certain amount of time has passed.
+     */
     private void loadImages(ArrayList<Set> sets) {
         for (Set set : sets) {
             if (set.getImageObjectEndpoint() != null && set.getImageUrl() == null) {
-                ApiRequests.getImage(this, set); // todo - check this!
+                ApiRequests.getImage(this, set);
             }
         }
     }

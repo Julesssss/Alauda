@@ -65,11 +65,15 @@ public class SetDetailPresenter implements SetDetailInterface.Presenter {
     @Override
     public void onDataRetrieved(Set set) {
         this.set = set;
-        view.setData(set);
+        if (view != null) {
+            view.setData(set);
+        }
     }
 
     @Override
     public void onDataFailure(String message) {
-        view.setMessage(message);
+        if (view != null) {
+            view.setMessage(message);
+        }
     }
 }
