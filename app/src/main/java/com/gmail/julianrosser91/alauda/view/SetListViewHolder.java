@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gmail.julianrosser91.alauda.R;
+import com.gmail.julianrosser91.alauda.Utils;
 import com.gmail.julianrosser91.alauda.data.model.Set;
 import com.squareup.picasso.Picasso;
 
@@ -14,8 +15,12 @@ import butterknife.ButterKnife;
 
 public class SetListViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.textview_title) TextView mTextViewTitle;
-    @BindView(R.id.imageview) ImageView mImageView;
+    @BindView(R.id.imageview)
+    ImageView mImageView;
+    @BindView(R.id.textview_title)
+    TextView mTextViewTitle;
+    @BindView(R.id.textview_summary)
+    TextView mTextViewSummary;
 
     private View view;
 
@@ -32,6 +37,15 @@ public class SetListViewHolder extends RecyclerView.ViewHolder {
 
     public void setTitle(String title) {
         mTextViewTitle.setText(title);
+    }
+
+    public void setSummary(String summary) {
+        if (Utils.isEmpty(summary)) {
+            mTextViewSummary.setVisibility(View.GONE);
+        } else {
+            mTextViewSummary.setVisibility(View.VISIBLE);
+            mTextViewSummary.setText(summary);
+        }
     }
 
     public void setImage(String imageUrl) {
