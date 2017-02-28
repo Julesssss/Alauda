@@ -1,7 +1,7 @@
 package com.gmail.julianrosser91.alauda.data.api;
 
 import com.gmail.julianrosser91.alauda.Alauda;
-import com.gmail.julianrosser91.alauda.data.model.ImageObject;
+import com.gmail.julianrosser91.alauda.data.model.Image;
 import com.gmail.julianrosser91.alauda.data.model.Set;
 import com.gmail.julianrosser91.alauda.data.model.SetArray;
 
@@ -36,13 +36,13 @@ public class ApiRequests {
     }
 
     public static void getImage(final ImageResponseListener responseListener, final Set set) {
-        Alauda.getInstance().getVodInterfaceAPI().getImage(set.getImageObjectEndpoint()).enqueue(new Callback<ImageObject>() {
+        Alauda.getInstance().getVodInterfaceAPI().getImage(set.getImageObjectEndpoint()).enqueue(new Callback<Image>() {
             @Override
-            public void onResponse(Call<ImageObject> call, Response<ImageObject> response) {
+            public void onResponse(Call<Image> call, Response<Image> response) {
                 if (response.isSuccessful()) {
                     // Update set object with imageUrl
-                    ImageObject imageObject = response.body();
-                    set.setImageUrl(imageObject.getUrl());
+                    Image image = response.body();
+                    set.setImageUrl(image.getUrl());
                     responseListener.onImageLoaded(set);
                 } else {
                     responseListener.onFailure(response.message());
@@ -50,7 +50,7 @@ public class ApiRequests {
             }
 
             @Override
-            public void onFailure(Call<ImageObject> call, Throwable t) {
+            public void onFailure(Call<Image> call, Throwable t) {
                 responseListener.onFailure(t.getMessage());
                 t.printStackTrace();
             }

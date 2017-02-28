@@ -1,7 +1,7 @@
 package com.gmail.julianrosser91.alauda.data.api;
 
 
-import com.gmail.julianrosser91.alauda.data.model.ImageObject;
+import com.gmail.julianrosser91.alauda.data.model.Image;
 import com.gmail.julianrosser91.alauda.data.model.SetArray;
 
 import retrofit2.Call;
@@ -15,6 +15,6 @@ public interface ApiInterface {
     Call<SetArray> getAllSets();
 
     @GET
-    Call<ImageObject> getImage(@Url String url);
+    Call<Image> getImage(@Url String url);
 
 }

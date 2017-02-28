@@ -10,7 +10,7 @@ import io.realm.internal.IOException;
 
 /*
  * This is required because using RealmString causes problems when using Retrofit & GSON. We must
- * make GSON know that RealmString is just a wrapper class. See - https://nullpointer.wtf/android/using-retrofit-realm-parceler/
+ * let GSON know that RealmString is just a wrapper class. See - https://nullpointer.wtf/android/using-retrofit-realm-parceler/
  */
 public class RealmStringListTypeAdapter extends TypeAdapter<RealmList<RealmString>> {
 
