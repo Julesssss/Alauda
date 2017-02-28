@@ -96,9 +96,9 @@ public class SetDetailPresenter implements SetDetailInterface.Presenter {
         if (view != null) {
             view.setIsFavourite(set.isFavourite());
             if (set.isFavourite()) {
-                view.setMessage(Alauda.getInstance().getString(R.string.message_favourites_add));
+                view.setMessage(String.format(Alauda.getInstance().getString(R.string.message_favourites_add), set.getTitle()));
             } else {
-                view.setMessage(Alauda.getInstance().getString(R.string.message_favourites_remove));
+                view.setMessage(String.format(Alauda.getInstance().getString(R.string.message_favourites_remove), set.getTitle()));
             }
         }
     }

@@ -2,6 +2,7 @@ package com.gmail.julianrosser91.alauda.data;
 
 import com.gmail.julianrosser91.alauda.Alauda;
 import com.gmail.julianrosser91.alauda.DeviceUtils;
+import com.gmail.julianrosser91.alauda.R;
 import com.gmail.julianrosser91.alauda.data.api.ApiRequests;
 import com.gmail.julianrosser91.alauda.data.model.Favourite;
 import com.gmail.julianrosser91.alauda.data.model.Set;
@@ -21,8 +22,13 @@ public class SetListModel implements SetListInterface.Model, ApiRequests.AllSets
 
     @Override
     public void getSetListData(boolean fromServer) {
-        if (fromServer && DeviceUtils.isConnectedOrConnecting(Alauda.getInstance())) {
-            ApiRequests.getAllSets(this);
+        if (fromServer) {
+            if (DeviceUtils.isConnectedOrConnecting(Alauda.getInstance())) {
+                ApiRequests.getAllSets(this);
+            } else {
+                presenter.onDataFailure(Alauda.getInstance().getString(R.string.message_error_no_network));
+                getLocalSetsData();
+            }
         } else {
             getLocalSetsData();
         }

@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.gmail.julianrosser91.alauda.R;
 import com.gmail.julianrosser91.alauda.data.model.Set;
@@ -21,13 +22,16 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SetListActivity extends AppCompatActivity implements SetListInterface.View {
+public class SetListActivity extends AppCompatActivity implements SetListInterface.View, View.OnClickListener {
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
+
+    @BindView(R.id.empty_message)
+    TextView textEmptyMessage;
 
     private SetListAdapter setListAdapter;
     private SetListInterface.Presenter presenter;
@@ -65,6 +69,7 @@ public class SetListActivity extends AppCompatActivity implements SetListInterfa
             }
         });
         recyclerView.setAdapter(setListAdapter);
+        textEmptyMessage.setOnClickListener(this);
     }
 
     private void attachPresenter() {
@@ -125,6 +130,20 @@ public class SetListActivity extends AppCompatActivity implements SetListInterfa
         startActivity(Intent.createChooser(intent, getString(R.string.message_intent_chooser_export_database)));
     }
 
+    @Override
+    public void setEmpty(final boolean empty) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (empty) {
+                    textEmptyMessage.setVisibility(View.VISIBLE);
+                } else {
+                    textEmptyMessage.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
     /*
      * Options menu methods
      */
@@ -142,8 +161,8 @@ public class SetListActivity extends AppCompatActivity implements SetListInterfa
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_test) {
-            presenter.testPressed();
+        if (id == R.id.action_reload) {
+            presenter.onReloadFromServer();
             return true;
         } else if (id == R.id.action_export_db) {
             presenter.exportDbPressed();
@@ -152,4 +171,13 @@ public class SetListActivity extends AppCompatActivity implements SetListInterfa
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.empty_message:
+                presenter.onReloadFromServer();
+                break;
+        }
+    }
 }

@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_test"
+        android:id="@+id/action_reload"
         android:orderInCategory="40"
-        android:title="Test"/>
+        android:title="@string/menu_list_reload"/>
 
     <item
         android:id="@+id/action_export_db"
         android:orderInCategory="50"
-        android:title="Export DB"/>
+        android:title="@string/menu_list_export_db"/>
 
 </menu>

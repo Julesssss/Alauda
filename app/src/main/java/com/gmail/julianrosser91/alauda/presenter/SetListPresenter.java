@@ -57,7 +57,7 @@ public class SetListPresenter implements SetListInterface.Presenter {
     }
 
     private void onFavouriteIconClicked(Set set) {
-        onFavouriteToggleSaved(!set.isFavourite());
+        onFavouriteToggleSaved(set);
         model.toggleFavouriteSet(set);
     }
 
@@ -74,7 +74,7 @@ public class SetListPresenter implements SetListInterface.Presenter {
     }
 
     @Override
-    public void testPressed() {
+    public void onReloadFromServer() {
         getDataSet(true);
     }
 
@@ -97,7 +97,12 @@ public class SetListPresenter implements SetListInterface.Presenter {
         sets = data;
         if (view != null) {
             view.showProgressBar(false);
-            view.setData(data);
+            if (data != null && data.size() > 0) {
+                view.setData(data);
+                view.setEmpty(false);
+            } else {
+                view.setEmpty(true);
+            }
         }
     }
 
@@ -119,12 +124,12 @@ public class SetListPresenter implements SetListInterface.Presenter {
     /*
      * Should refactor this method in BasePresenter class
      */
-    private void onFavouriteToggleSaved(boolean favourite) {
+    private void onFavouriteToggleSaved(Set set) {
         if (view != null) {
-            if (favourite) {
-                view.setMessage(Alauda.getInstance().getString(R.string.message_favourites_add));
+            if (!set.isFavourite()) {
+                view.setMessage(String.format(Alauda.getInstance().getString(R.string.message_favourites_add), set.getTitle()));
             } else {
-                view.setMessage(Alauda.getInstance().getString(R.string.message_favourites_remove));
+                view.setMessage(String.format(Alauda.getInstance().getString(R.string.message_favourites_remove), set.getTitle()));
             }
         }
     }

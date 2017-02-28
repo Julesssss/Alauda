@@ -6,6 +6,10 @@
     <string name="message_error_set_details_unavailable">Set not available, please choose another</string>
     <string name="message_intent_chooser_export_database">Export Realm Database</string>
     <string name="message_error_set_unavailable">Set unavailable!</string>
-    <string name="message_favourites_add">Added to favourites</string>
-    <string name="message_favourites_remove">Removed from favourites</string>
+    <string name="message_favourites_add">Added %1$s to favourites</string>
+    <string name="message_favourites_remove">Removed %1$s from favourites</string>
+    <string name="message_error_no_network">No internet connection, please check and try again.</string>
+    <string name="message_sets_empty">No Sets available to display. Please ensure network is available and tap this message to reload.</string>
+    <string name="menu_list_reload">Reload</string>
+    <string name="menu_list_export_db">Export DB</string>
 </resources>

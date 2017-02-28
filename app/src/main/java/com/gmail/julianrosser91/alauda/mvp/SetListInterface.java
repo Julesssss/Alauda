@@ -20,6 +20,8 @@ public interface SetListInterface {
         void startActivity(Intent i);
 
         void startChooserActivity(Intent i);
+
+        void setEmpty(boolean empty);
     }
 
     /**
@@ -35,7 +37,7 @@ public interface SetListInterface {
 
         void onViewClicked(Activity activity, android.view.View setListItemView);
 
-        void testPressed();
+        void onReloadFromServer();
 
         void exportDbPressed();
 
