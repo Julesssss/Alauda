@@ -8,6 +8,8 @@ public interface SetDetailInterface {
 
         void setData(Set set);
 
+        void setIsFavourite(boolean isFavourite);
+
         void setMessage(String message);
 
     }
@@ -23,15 +25,21 @@ public interface SetDetailInterface {
 
         void detachView();
 
+        void onFavouriteToggled();
+
         // Model --> Presenter
 
         void onDataRetrieved(Set set);
 
         void onDataFailure(String message);
+
+        void onFavouriteToggleSaved(Set set);
     }
 
     interface Model {
 
         void getSetFromUid(String uid);
+
+        void toggleFavourite(Set set);
     }
 }

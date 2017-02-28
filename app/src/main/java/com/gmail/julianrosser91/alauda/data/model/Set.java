@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -19,7 +20,9 @@ public class Set extends RealmObject {
     private String quoter;
     private String summary;
     private String url;
+    private boolean isFavourite;
 
+    @Ignore
     @SerializedName("image_urls")
     private RealmList<RealmString> imageUrls;
 
@@ -40,11 +43,19 @@ public class Set extends RealmObject {
     }
 
     public String getSummary() {
-        return summary;
+        return summary.replace("\n", ""); // Remove line breaks from summary
     }
 
     public String getImageUrl() {
         return url;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
 
     public void setImageUrl(String url) {

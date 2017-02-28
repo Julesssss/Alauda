@@ -14,7 +14,6 @@ public class SetDetailPresenter implements SetDetailInterface.Presenter {
     private SetDetailInterface.View view;
     private SetDetailInterface.Model model;
     private Set set;
-    private String setUid;
     private Bundle bundle;
 
     public SetDetailPresenter(SetDetailInterface.View view, Bundle extras) {
@@ -26,7 +25,7 @@ public class SetDetailPresenter implements SetDetailInterface.Presenter {
 
     private void getUidFromBundle() {
         if (bundle != null) {
-            setUid = bundle.getString(Constants.BUNDLE_UID);
+            String setUid = bundle.getString(Constants.BUNDLE_UID);
             if (setUid != null) {
                 loadSetData(setUid);
             } else {
@@ -54,6 +53,17 @@ public class SetDetailPresenter implements SetDetailInterface.Presenter {
         this.view = null;
     }
 
+    @Override
+    public void onFavouriteToggled() {
+        if (set != null) {
+            model.toggleFavourite(set);
+        } else {
+            if (view != null) {
+                view.setMessage(Alauda.getInstance().getString(R.string.message_error_set_unavailable));
+            }
+        }
+    }
+
     /*
      * Model interface methods
      */
@@ -74,6 +84,22 @@ public class SetDetailPresenter implements SetDetailInterface.Presenter {
     public void onDataFailure(String message) {
         if (view != null) {
             view.setMessage(message);
+        }
+    }
+
+    /*
+     * Should refactor this method in BasePresenter class
+     */
+    @Override
+    public void onFavouriteToggleSaved(Set set) {
+        this.set = set;
+        if (view != null) {
+            view.setIsFavourite(set.isFavourite());
+            if (set.isFavourite()) {
+                view.setMessage(Alauda.getInstance().getString(R.string.message_favourites_add));
+            } else {
+                view.setMessage(Alauda.getInstance().getString(R.string.message_favourites_remove));
+            }
         }
     }
 }

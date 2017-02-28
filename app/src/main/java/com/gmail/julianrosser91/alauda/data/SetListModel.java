@@ -3,6 +3,7 @@ package com.gmail.julianrosser91.alauda.data;
 import com.gmail.julianrosser91.alauda.Alauda;
 import com.gmail.julianrosser91.alauda.DeviceUtils;
 import com.gmail.julianrosser91.alauda.data.api.ApiRequests;
+import com.gmail.julianrosser91.alauda.data.model.Favourite;
 import com.gmail.julianrosser91.alauda.data.model.Set;
 import com.gmail.julianrosser91.alauda.mvp.SetListInterface;
 
@@ -19,8 +20,8 @@ public class SetListModel implements SetListInterface.Model, ApiRequests.AllSets
     }
 
     @Override
-    public void getSetListData() {
-        if (DeviceUtils.isConnectedOrConnecting(Alauda.getInstance())) {
+    public void getSetListData(boolean fromServer) {
+        if (fromServer && DeviceUtils.isConnectedOrConnecting(Alauda.getInstance())) {
             ApiRequests.getAllSets(this);
         } else {
             getLocalSetsData();
@@ -28,7 +29,30 @@ public class SetListModel implements SetListInterface.Model, ApiRequests.AllSets
     }
 
     @Override
+    public void toggleFavouriteSet(Set set) {
+        DatabaseHelper.toggleFavourite(set);
+        getLocalSetsData();
+    }
+
+    /*
+     * Should improve this by using an Async task to retrieve data, add favourites and save to local
+     * database.
+     */
+    @Override
     public void onDataLoaded(ArrayList<Set> data) {
+        RealmResults<Favourite> favourites = DatabaseHelper.getFavourites();
+
+        // Update favourite field from local favourites
+        for (Favourite fav : favourites) {
+            if (fav.isFavourite()) {
+                for (Set set : data) {
+                    if (fav.getUid().equals(set.getUid())) {
+                        set.setFavourite(true);
+                    }
+                }
+            }
+        }
+
         // Save data to local database
         DatabaseHelper.saveAllSets(data);
         presenter.onDataRetrieved(data);

@@ -33,7 +33,7 @@ public interface SetListInterface {
 
         void detachView();
 
-        void onSetClicked(Activity activity, android.view.View setListItemView);
+        void onViewClicked(Activity activity, android.view.View setListItemView);
 
         void testPressed();
 
@@ -44,10 +44,14 @@ public interface SetListInterface {
         void onDataRetrieved(ArrayList<Set> sets);
 
         void onDataFailure(String message);
+
+        void onActivityRestarted();
     }
 
     interface Model {
 
-        void getSetListData();
+        void getSetListData(boolean fromServer);
+
+        void toggleFavouriteSet(Set set);
     }
 }

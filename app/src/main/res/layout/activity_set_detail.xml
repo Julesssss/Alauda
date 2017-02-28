@@ -1,37 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_set_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.gmail.julianrosser91.alauda.view.SetDetailActivity">
 
-    <TextView
-        android:id="@+id/textview_title"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp" />
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_favorite_border_white_24dp" />
 
-    <TextView
-        android:id="@+id/textview_body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textview_quoter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textview_summary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp" />
+            <ImageView
+                android:id="@+id/imageview_detail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/set_detail_image_height"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder" />
 
-</RelativeLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_play_circle_filled_white_white_48dp" />
+
+            <TextView
+                android:id="@+id/textview_quoter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/imageview_detail"
+                android:background="@color/colorImageTextBackground"
+                android:padding="8dp"
+                android:text="Severus Snape in Harry Potter"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="italic" />
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:id="@+id/textview_summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:text="Have you ever danced with the Devil in the pale moonlight?"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textview_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="The Death of Satan could have been a tragedy for the imagination, had he ever gone away... Faustian pacts are still legal tender in today's world, and alchemists just transformed into mad scientists, led by the inimitable Dr Frankenstein. But there's a problem with evil, and among film's most powerful demons, the demonised can also be found. Witches were tortured and killed by religious interrogators, but what if their magic was not so very black after all? Mankind's inhumanity and lust for power are usually the tell-tale heart of these stories of obsession, evil, the macabre, and the unknown darkness of the mind."
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

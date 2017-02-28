@@ -45,6 +45,15 @@ public class SetListActivity extends AppCompatActivity implements SetListInterfa
         attachPresenter();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        presenter.onActivityRestarted();
+    }
+
+    /*
+     * This could be improved by using a Realm RecyclerView / adapter
+     */
     private void initialiseViews() {
         ButterKnife.bind(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -52,7 +61,7 @@ public class SetListActivity extends AppCompatActivity implements SetListInterfa
         setListAdapter = new SetListAdapter(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.onSetClicked(SetListActivity.this, view);
+                presenter.onViewClicked(SetListActivity.this, view);
             }
         });
         recyclerView.setAdapter(setListAdapter);

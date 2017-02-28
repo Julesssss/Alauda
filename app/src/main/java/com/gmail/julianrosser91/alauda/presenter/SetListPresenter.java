@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.gmail.julianrosser91.alauda.Alauda;
 import com.gmail.julianrosser91.alauda.Constants;
 import com.gmail.julianrosser91.alauda.R;
 import com.gmail.julianrosser91.alauda.Utils;
@@ -26,7 +27,7 @@ public class SetListPresenter implements SetListInterface.Presenter {
         this.sets = new ArrayList<>();
         this.view = view;
         this.model = new SetListModel(this);
-        loadSetData();
+        getDataSet(true);
     }
 
     /*
@@ -45,29 +46,46 @@ public class SetListPresenter implements SetListInterface.Presenter {
     }
 
     @Override
-    public void onSetClicked(Activity activity, View setListItemView) {
-        Set set = (Set) setListItemView.getTag();
+    public void onViewClicked(Activity activity, View view) {
+        Set set = (Set) view.getTag();
+        int id = view.getId();
+        if (id == R.id.imageview_favourite) {
+            onFavouriteIconClicked(set);
+        } else {
+            onListItemClicked(view, set);
+        }
+    }
 
+    private void onFavouriteIconClicked(Set set) {
+        onFavouriteToggleSaved(!set.isFavourite());
+        model.toggleFavouriteSet(set);
+    }
+
+    private void onListItemClicked(View view, Set set) {
         if (Utils.isEmpty(set.getBody())) {
-            view.setMessage(activity.getString(R.string.message_error_set_details_unavailable));
+            this.view.setMessage(view.getContext().getString(R.string.message_error_set_details_unavailable));
         } else {
             Bundle bundle = new Bundle();
             bundle.putString(Constants.BUNDLE_UID, set.getUid());
-
-            Intent intent = new Intent(activity, SetDetailActivity.class);
+            Intent intent = new Intent(view.getContext(), SetDetailActivity.class);
             intent.putExtras(bundle);
-            view.startActivity(intent);
+            this.view.startActivity(intent);
         }
     }
 
     @Override
     public void testPressed() {
-        loadSetData();
+        getDataSet(true);
     }
 
     @Override
     public void exportDbPressed() {
         view.startChooserActivity(DatabaseHelper.getExportDatabaseIntent());
+    }
+
+    @Override
+    public void onActivityRestarted() {
+        getDataSet(false);
     }
 
      /*
@@ -91,10 +109,24 @@ public class SetListPresenter implements SetListInterface.Presenter {
         }
     }
 
-    private void loadSetData() {
+    private void getDataSet(boolean fromServer) {
         if (view != null) {
             view.showProgressBar(true);
-            model.getSetListData();
+            model.getSetListData(fromServer);
         }
     }
+
+    /*
+     * Should refactor this method in BasePresenter class
+     */
+    private void onFavouriteToggleSaved(boolean favourite) {
+        if (view != null) {
+            if (favourite) {
+                view.setMessage(Alauda.getInstance().getString(R.string.message_favourites_add));
+            } else {
+                view.setMessage(Alauda.getInstance().getString(R.string.message_favourites_remove));
+            }
+        }
+    }
+
 }

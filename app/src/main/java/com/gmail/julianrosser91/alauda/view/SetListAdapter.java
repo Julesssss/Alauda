@@ -29,8 +29,7 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListViewHolder> {
     public SetListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.set_list_view, parent, false);
-        SetListViewHolder vh = new SetListViewHolder(view, onClickListener);
-        return vh;
+        return new SetListViewHolder(view, onClickListener);
     }
 
     @Override
@@ -39,6 +38,7 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListViewHolder> {
         holder.setTag(set);
         holder.setTitle(set.getTitle());
         holder.setSummary(set.getSummary());
+        holder.setIsFavourite(set.isFavourite());
         holder.setImage(set.getImageUrl());
     }
 

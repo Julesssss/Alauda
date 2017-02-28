@@ -3,6 +3,9 @@
     <string name="message_error_bundle_no_uid">UID not in Bundle!</string>
     <string name="message_error_bundle_null">No bundle passed to Activity!</string>
     <string name="message_error_database_no_matching_uid">No matching UID in Database!</string>
-    <string name="message_error_set_details_unavailable">No details available for this set, please choose another</string>
+    <string name="message_error_set_details_unavailable">Set not available, please choose another</string>
     <string name="message_intent_chooser_export_database">Export Realm Database</string>
+    <string name="message_error_set_unavailable">Set unavailable!</string>
+    <string name="message_favourites_add">Added to favourites</string>
+    <string name="message_favourites_remove">Removed from favourites</string>
 </resources>

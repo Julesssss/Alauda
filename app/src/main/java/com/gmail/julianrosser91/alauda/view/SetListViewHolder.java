@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gmail.julianrosser91.alauda.Alauda;
 import com.gmail.julianrosser91.alauda.R;
 import com.gmail.julianrosser91.alauda.Utils;
 import com.gmail.julianrosser91.alauda.data.model.Set;
@@ -17,22 +18,29 @@ public class SetListViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.imageview)
     ImageView mImageView;
+
     @BindView(R.id.textview_title)
     TextView mTextViewTitle;
+
     @BindView(R.id.textview_summary)
     TextView mTextViewSummary;
+
+    @BindView(R.id.imageview_favourite)
+    ImageView mImageViewFavourite;
 
     private View view;
 
     public SetListViewHolder(View view, View.OnClickListener clickListener) {
         super(view);
         this.view = view;
-        view.setOnClickListener(clickListener);
         ButterKnife.bind(this, this.view);
+        view.setOnClickListener(clickListener);
+        mImageViewFavourite.setOnClickListener(clickListener);
     }
 
     public void setTag(Set set) {
         view.setTag(set);
+        mImageViewFavourite.setTag(set);
     }
 
     public void setTitle(String title) {
@@ -45,6 +53,14 @@ public class SetListViewHolder extends RecyclerView.ViewHolder {
         } else {
             mTextViewSummary.setVisibility(View.VISIBLE);
             mTextViewSummary.setText(summary);
+        }
+    }
+
+    public void setIsFavourite(boolean isFavourite) {
+        if (isFavourite) {
+            mImageViewFavourite.setImageDrawable(Alauda.getInstance().getResources().getDrawable(R.drawable.ic_favorite_pink_a200_24dp));
+        } else {
+            mImageViewFavourite.setImageDrawable(Alauda.getInstance().getResources().getDrawable(R.drawable.ic_favorite_border_pink_a200_24dp));
         }
     }
 

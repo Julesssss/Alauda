@@ -22,4 +22,10 @@ public class SetDetailModel implements SetDetailInterface.Model {
             presenter.onDataFailure(Alauda.getInstance().getString(R.string.message_error_database_no_matching_uid));
         }
     }
+
+    @Override
+    public void toggleFavourite(Set set) {
+        set = DatabaseHelper.toggleFavourite(set);
+        presenter.onFavouriteToggleSaved(set);
+    }
 }

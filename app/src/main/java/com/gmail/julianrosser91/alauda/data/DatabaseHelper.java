@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import com.gmail.julianrosser91.alauda.Alauda;
 import com.gmail.julianrosser91.alauda.Constants;
+import com.gmail.julianrosser91.alauda.data.model.Favourite;
 import com.gmail.julianrosser91.alauda.data.model.Set;
 
 import java.io.File;
@@ -42,6 +43,45 @@ public class DatabaseHelper {
         realmDatabase.commitTransaction();
     }
 
+    public static Set toggleFavourite(Set set) {
+        Realm realmDatabase = getRealmDatabase();
+        realmDatabase.beginTransaction();
+        set.setFavourite(!set.isFavourite());
+        realmDatabase.insertOrUpdate(set);
+        realmDatabase.commitTransaction();
+        updateFavourites(new Favourite(set.getUid(), set.isFavourite()));
+        return set;
+    }
+
+    private static void updateFavourites(Favourite favourite) {
+        if (favourite.isFavourite()) {
+            addFavourite(favourite);
+        } else {
+            removeFavourite(favourite);
+        }
+    }
+
+    private static void addFavourite(Favourite favourite) {
+        Realm realmDatabase = getRealmDatabase();
+        realmDatabase.beginTransaction();
+        realmDatabase.insertOrUpdate(favourite);
+        realmDatabase.commitTransaction();
+    }
+
+    private static void removeFavourite(Favourite favourite) {
+        Realm realmDatabase = getRealmDatabase();
+        realmDatabase.beginTransaction();
+        Favourite favToDelete = realmDatabase.where(Favourite.class)
+                .equalTo(Constants.SET_UID_KEY, favourite.getUid()).findFirst();
+        favToDelete.deleteFromRealm();
+        realmDatabase.commitTransaction();
+    }
+
+    public static RealmResults<Favourite> getFavourites() {
+        Realm realmDatabase = getRealmDatabase();
+        return realmDatabase.where(Favourite.class).findAll();
+    }
+
     /*
      *  Use this to export Realm DB so we can view it with Realm Browser. Copied from here -
      *  http://stackoverflow.com/questions/28478987/how-to-view-my-realm-file-in-the-realm-browser
@@ -49,7 +89,7 @@ public class DatabaseHelper {
     public static Intent getExportDatabaseIntent() {
 
         // init realm
-        Realm realm = Realm.getDefaultInstance();
+        Realm realm = DatabaseHelper.getRealmDatabase();
 
         File exportRealmFile = null;
         // get or create an "export.realm" file
