@@ -11,4 +11,7 @@ public class Constants {
     // Bundle
     public static String BUNDLE_UID = "BUNDLE_UID";
 
+    // Network
+    public static int CONNECTION_TIMOUT_SECONDS = 5;
+    public static int READ_TIMOUT_SECONDS = 10;
 }

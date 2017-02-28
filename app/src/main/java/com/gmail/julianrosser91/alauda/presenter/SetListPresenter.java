@@ -38,6 +38,7 @@ public class SetListPresenter implements SetListInterface.Presenter {
     public void reattachView(SetListInterface.View view) {
         this.view = view;
         view.setData(sets);
+        isDataEmpty();
     }
 
     @Override
@@ -99,10 +100,16 @@ public class SetListPresenter implements SetListInterface.Presenter {
             view.showProgressBar(false);
             if (data != null && data.size() > 0) {
                 view.setData(data);
-                view.setEmpty(false);
-            } else {
-                view.setEmpty(true);
             }
+            isDataEmpty();
+        }
+    }
+
+    private void isDataEmpty() {
+        if (sets == null || sets.size() == 0) {
+            view.setEmpty(true);
+        } else {
+            view.setEmpty(false);
         }
     }
 

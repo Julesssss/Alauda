@@ -4,6 +4,7 @@ import com.gmail.julianrosser91.alauda.Alauda;
 import com.gmail.julianrosser91.alauda.DeviceUtils;
 import com.gmail.julianrosser91.alauda.R;
 import com.gmail.julianrosser91.alauda.data.api.ApiRequests;
+import com.gmail.julianrosser91.alauda.data.api.ResponseListeners;
 import com.gmail.julianrosser91.alauda.data.model.Favourite;
 import com.gmail.julianrosser91.alauda.data.model.Set;
 import com.gmail.julianrosser91.alauda.mvp.SetListInterface;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 import io.realm.RealmResults;
 
-public class SetListModel implements SetListInterface.Model, ApiRequests.AllSetsResponseListener, ApiRequests.ImageResponseListener {
+public class SetListModel implements SetListInterface.Model, ResponseListeners.AllSetsResponseListener, ResponseListeners.ImageResponseListener {
 
     private final SetListInterface.Presenter presenter;
 

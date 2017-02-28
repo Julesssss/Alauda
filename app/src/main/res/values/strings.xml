@@ -12,4 +12,6 @@
     <string name="message_sets_empty">No Sets available to display. Please ensure network is available and tap this message to reload.</string>
     <string name="menu_list_reload">Reload</string>
     <string name="menu_list_export_db">Export DB</string>
+    <string name="message_error_unknown_host">Unknown Host, check connection and try again</string>
+    <string name="message_error_connection_timeout">Connection timeout, please check and try again</string>
 </resources>

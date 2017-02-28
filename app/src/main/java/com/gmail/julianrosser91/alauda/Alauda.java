@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.concurrent.TimeUnit;
+
 import io.realm.Realm;
 import io.realm.RealmList;
 import okhttp3.OkHttpClient;
@@ -41,7 +43,10 @@ public class Alauda extends Application {
                             RealmStringListTypeAdapter.INSTANCE)
                     .create();
 
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                    .readTimeout(Constants.READ_TIMOUT_SECONDS, TimeUnit.SECONDS)
+                    .connectTimeout(Constants.CONNECTION_TIMOUT_SECONDS, TimeUnit.SECONDS);
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(Constants.API_BASE)
                     .client(builder.build())
