@@ -8,6 +8,7 @@ import com.gmail.julianrosser91.alauda.data.model.RealmStringListTypeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -50,6 +51,7 @@ public class Alauda extends Application {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(Constants.API_BASE)
                     .client(builder.build())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 

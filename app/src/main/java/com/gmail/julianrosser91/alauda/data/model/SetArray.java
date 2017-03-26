@@ -16,4 +16,8 @@ public class SetArray {
     public ArrayList<Set> getSets() {
         return (ArrayList<Set>) sets;
     }
+
+    public List<Set> getSetsAsList() {
+        return sets;
+    }
 }

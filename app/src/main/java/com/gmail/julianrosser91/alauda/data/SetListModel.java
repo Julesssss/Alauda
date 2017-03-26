@@ -25,7 +25,7 @@ public class SetListModel implements SetListInterface.Model, ResponseListeners.A
     public void getSetListData(boolean fromServer) {
         if (fromServer) {
             if (DeviceUtils.isConnectedOrConnecting(Alauda.getInstance())) {
-                ApiRequests.getAllSets(this);
+                ApiRequests.getAllSetsRxJava(this);
             } else {
                 presenter.onDataFailure(Alauda.getInstance().getString(R.string.message_error_no_network));
                 getLocalSetsData();
